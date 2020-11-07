@@ -1,6 +1,6 @@
 package com.shure.queue.websocket;
 
-import com.shure.queue.queue.producer.Producer;
+import com.shure.queue.redisMqPs.publish.Publish;
 import com.shure.queue.websocket.model.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public class SocketController {
     private SimpMessagingTemplate messagingTemplate;
 
     @Autowired
-    private Producer producer;
+    private Publish publish;
 
     @MessageMapping("/message")
     //@SendTo("/topic/message")
@@ -31,7 +31,7 @@ public class SocketController {
         logger.info("message:", message);
         message.setPkId(UUID.randomUUID().toString());
         message.setMsgType("00A");
-        producer.sendChannelMess("test", message);
+        publish.sendChannelMess("test", message);
         //return message;
     }
 

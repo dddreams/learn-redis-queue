@@ -1,7 +1,7 @@
-package com.shure.queue.queue.config;
+package com.shure.queue.redisMqPs.config;
 
 import cn.hutool.core.thread.ThreadFactoryBuilder;
-import com.shure.queue.queue.consumer.LogConsumer;
+import com.shure.queue.redisMqPs.subscribe.TestSubscribe;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -13,14 +13,15 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import java.util.concurrent.*;
 
 @Configuration
-public class SubListenerConfig {
+public class SubscribeListenerConfig {
     /**
      * 初始化监听器
      */
     @Bean
     RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
-                                            MessageListenerAdapter listenerAdapter1,
-                                            MessageListenerAdapter listenerAdapter2) {
+                                            MessageListenerAdapter listenerAdapter1
+                                            //MessageListenerAdapter listenerAdapter2
+    ) {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
 
@@ -49,7 +50,7 @@ public class SubListenerConfig {
      * @return
      */
     @Bean
-    MessageListenerAdapter listenerAdapter1(LogConsumer receiver) {
+    MessageListenerAdapter listenerAdapter1(TestSubscribe receiver) {
         return new MessageListenerAdapter(receiver, "receiveMessage");
     }
 
